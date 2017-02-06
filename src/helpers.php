@@ -1,7 +1,5 @@
 <?php
 
-die('test');
-
 if (!function_exists('arrayGet')) {
     /**
      * Helper function for getting data from array
