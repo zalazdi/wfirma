@@ -6,10 +6,18 @@ use function GuzzleHttp\json_decode;
 
 class Client
 {
+    const AUTH_BASIC = 1;
+    const AUTH_OAUTH = 2;
+
     /**
      * @var string API Url
      */
     protected $url = 'https://api2.wfirma.pl/';
+
+    /**
+     * @var int Type of authentication
+     */
+    protected $authentication;
 
     /**
      * @var string API username
@@ -29,14 +37,11 @@ class Client
     /**
      * Client constructor.
      *
-     * @param string $username API username
-     * @param string $password API password
+     * @param array $config API configuration
      */
-    public function __construct($username, $password)
+    public function __construct(array $config = [])
     {
-        $this->username = $username;
-        $this->password = $password;
-
+        $this->parseConfig($config);
         $this->initializeGuzzle();
     }
 
@@ -51,6 +56,18 @@ class Client
         $body = json_decode($response->getBody()->getContents(), true);
 
         return $body;
+    }
+
+    /**
+     * Parse configuration
+     *
+     * @param array $config
+     */
+    protected function parseConfig(array $config = [])
+    {
+        $this->authentication   = arrayGet($config['authentication'], self::AUTH_BASIC);
+        $this->username         = arrayGet($config['username']);
+        $this->password         = arrayGet($config['password']);
     }
 
     protected function initializeGuzzle()

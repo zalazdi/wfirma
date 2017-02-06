@@ -3,6 +3,7 @@
 namespace Zalazdi\wFirma\Repositories;
 
 use Zalazdi\wFirma\Client;
+use Zalazdi\wFirma\Collection;
 use Zalazdi\wFirma\Query;
 
 abstract class Repository
@@ -10,6 +11,7 @@ abstract class Repository
     protected $client;
 
     public $name;
+    public $model;
 
     public function __construct(Client $client)
     {
@@ -34,8 +36,8 @@ abstract class Repository
         $result = $this->client->execute($query);
 
         // @ToDo Return collection instead of Array
-        if (array_get($result, 'status.code') == 'OK') {
-            return $result[$this->name];
+        if (arrayGet($result['status']['code']) == 'OK') {
+            return $this->assignToModel(arrayGet($result[$this->name]));
         }
     }
 
@@ -54,6 +56,32 @@ abstract class Repository
 
     }
 
+    /**
+     * Fill models with response data
+     *
+     * @param array $result
+     * @return array
+     */
+    protected function assignToModel(array $result = [])
+    {
+        $collection = new Collection();
+        $collection->setParameters(arrayGet($result['parameters']));
+
+        foreach($result as $key => $value) {
+            if ($key != 'parameters') {
+                $item = new $this->model($value);
+                $collection->addItem($item);
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * @param string $function Function type
+     *
+     * @return Query
+     */
     protected function newQuery($function)
     {
         return new Query($this->name, $function);
