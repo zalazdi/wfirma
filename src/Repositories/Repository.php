@@ -20,12 +20,20 @@ abstract class Repository
         $this->client = $client;
     }
 
-    public function get()
+    public function get($id)
     {
+        $query = $this->newQuery('get/'.$id);
 
+        $result = $this->client->execute($query);
+
+        if (arrayGet($result['status']['code']) == 'OK') {
+            return new $this->model(arrayGet($result[$this->name][0][$this->singularName]));
+        }
+
+        return false;
     }
 
-    public function find($limit = 10, $page = 1, $parameters = false)
+    public function find($limit = 10, $page = 1, $conditions = [])
     {
         // @ToDo Add parameters
 
@@ -35,6 +43,7 @@ abstract class Repository
                 'parameters' => [
                     'limit' => $limit,
                     'page' => $page,
+                    'conditions' => $conditions,
                 ],
             ]
         ]);
@@ -51,15 +60,14 @@ abstract class Repository
         $query = $this->newQuery('add');
         $query->addParameters([
             $this->name => [
-                $this->singularName => $model->attributes,
+                $this->singularName => $model->toArray(),
             ]
         ]);
 
         $result = $this->client->execute($query);
 
         if (arrayGet($result['status']['code']) == 'OK') {
-            var_dump(arrayGet($result[$this->name][0]));
-            return $model->fill(arrayGet($result[$this->name][0]));
+            return $model->fill(arrayGet($result[$this->name][0][$this->singularName]));
         }
 
         return false;
@@ -87,8 +95,8 @@ abstract class Repository
         $collection->setParameters(arrayGet($result['parameters']));
 
         foreach($result as $key => $value) {
-            if ($key != 'parameters') {
-                $value = arrayGet($value[$this->name]);
+            if (is_int($key)) {
+                $value = arrayGet($value[$this->singularName]);
 
                 $item = new $this->model($value);
                 $collection->addItem($item);

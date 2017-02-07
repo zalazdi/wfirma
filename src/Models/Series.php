@@ -43,4 +43,7 @@ class Series extends Model
     const TYPE_RECEIPT_FISCAL_BILL = 'receipt_fiscal_normal';
     /** @const Inny przychód - sprzedaż (bez VAT) */
     const TYPE_INCOME_BILL = 'income_normal';
+
+    /** @const Faktura korygująca */
+    const TYPE_CORRECTION = 'correction';
 }

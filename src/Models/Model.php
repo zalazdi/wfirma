@@ -2,6 +2,8 @@
 
 namespace Zalazdi\wFirma\Models;
 
+use Zalazdi\wFirma\Collection;
+
 class Model
 {
     public $casts = [];
@@ -49,9 +51,31 @@ class Model
         $this->attributes[$key] = $this->castAtribute($type, $value);
     }
 
+    public function toArray()
+    {
+        $response = [];
+        foreach ($this->attributes as $key => $value) {
+            if ($value instanceof Model) {
+                $response[$key] = $value->toArray();
+            } elseif ($value instanceof Collection) {
+                $values = [];
+                foreach($value as $item) {
+                    $values[] = [
+                        (new \ReflectionClass($item))->getShortName() => $item->toArray()
+                    ];
+                }
+                $response[$key] = $values;
+            } elseif ($value !== null) {
+                $response[$key] = $value;
+            }
+        }
+
+        return $response;
+    }
+
     protected function castAtribute($type, $value)
     {
-        if ($value == null) {
+        if ($value === null) {
             return $value;
         }
 
@@ -79,6 +103,5 @@ class Model
             default:
                 return $value;
         }
-
     }
 }

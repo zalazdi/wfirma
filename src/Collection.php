@@ -2,10 +2,19 @@
 
 namespace Zalazdi\wFirma;
 
+use Zalazdi\wFirma\Models\Model;
+
 class Collection implements \IteratorAggregate
 {
     public $items;
     public $parameters;
+
+    public function __construct(array $items = [])
+    {
+        foreach ($items as $item) {
+            $this->addItem($item);
+        }
+    }
 
     /**
      * Set collection parameters
@@ -35,5 +44,15 @@ class Collection implements \IteratorAggregate
     public function getIterator()
     {
         return new \ArrayIterator($this->items);
+    }
+
+    /**
+     * Get first item
+     *
+     * @return object
+     */
+    public function first()
+    {
+        return reset($this->items);
     }
 }

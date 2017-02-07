@@ -3,6 +3,7 @@
 namespace Zalazdi\wFirma;
 
 use function GuzzleHttp\json_decode;
+use function GuzzleHttp\json_encode;
 
 class Client
 {
@@ -45,7 +46,7 @@ class Client
         $this->initializeGuzzle();
     }
 
-    public function execute(Query $query)
+    public function execute(Query $query, $json = true)
     {
         $response = $this->guzzle->request(
             'POST',
@@ -53,7 +54,11 @@ class Client
             ['json' => $query->parameters]
         );
 
-        $body = json_decode($response->getBody()->getContents(), true);
+        if ($json) {
+            $body = json_decode($response->getBody()->getContents(), true);
+        } else {
+            $body = $response->getBody()->getContents();
+        }
 
         return $body;
     }
