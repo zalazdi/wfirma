@@ -69,6 +69,8 @@ abstract class Repository
 
         foreach($result as $key => $value) {
             if ($key != 'parameters') {
+                $value = arrayGet($value[$this->name]);
+
                 $item = new $this->model($value);
                 $collection->addItem($item);
             }
