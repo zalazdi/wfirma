@@ -11,7 +11,7 @@ class Series extends Model
         'name'          => 'string',
         'template'      => 'string',
         'initnumber'    => 'int',
-        'type'          => 'int',
+        'type'          => 'string',
         'reset'         => 'string',
         'created'       => 'datetime',
         'modified'      => 'datetime',

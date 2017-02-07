@@ -32,6 +32,18 @@ class Model
         }
     }
 
+    public function __get($key)
+    {
+        return arrayGet($this->attributes[$key]);
+    }
+
+    public function __set($key, $value)
+    {
+        $type = arrayGet($this->casts[$key]);
+
+        $this->setAttribute($key, $value, $type);
+    }
+
     public function setAttribute($key, $value, $type)
     {
         $this->attributes[$key] = $this->castAtribute($type, $value);

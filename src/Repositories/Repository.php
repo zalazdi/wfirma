@@ -4,6 +4,7 @@ namespace Zalazdi\wFirma\Repositories;
 
 use Zalazdi\wFirma\Client;
 use Zalazdi\wFirma\Collection;
+use Zalazdi\wFirma\Models\Model;
 use Zalazdi\wFirma\Query;
 
 abstract class Repository
@@ -11,6 +12,7 @@ abstract class Repository
     protected $client;
 
     public $name;
+    public $singularName;
     public $model;
 
     public function __construct(Client $client)
@@ -29,21 +31,38 @@ abstract class Repository
 
         $query = $this->newQuery('find');
         $query->addParameters([
-            'limit' => $limit,
-            'page' => $page
+            $this->name => [
+                'parameters' => [
+                    'limit' => $limit,
+                    'page' => $page,
+                ],
+            ]
         ]);
 
         $result = $this->client->execute($query);
 
-        // @ToDo Return collection instead of Array
         if (arrayGet($result['status']['code']) == 'OK') {
             return $this->assignToModel(arrayGet($result[$this->name]));
         }
     }
 
-    public function add()
+    public function add(Model $model)
     {
+        $query = $this->newQuery('add');
+        $query->addParameters([
+            $this->name => [
+                $this->singularName => $model->attributes,
+            ]
+        ]);
 
+        $result = $this->client->execute($query);
+
+        if (arrayGet($result['status']['code']) == 'OK') {
+            var_dump(arrayGet($result[$this->name][0]));
+            return $model->fill(arrayGet($result[$this->name][0]));
+        }
+
+        return false;
     }
 
     public function edit()
