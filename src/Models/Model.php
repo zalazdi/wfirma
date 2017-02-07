@@ -63,7 +63,6 @@ class Model
             case 'json':
                 return json_decode($value, true);
             case 'datetime':
-                var_dump($value);
                 return new \DateTime($value);
             default:
                 return $value;
