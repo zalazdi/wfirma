@@ -7,18 +7,10 @@ use function GuzzleHttp\json_encode;
 
 class Client
 {
-    const AUTH_BASIC = 1;
-    const AUTH_OAUTH = 2;
-
     /**
      * @var string API Url
      */
     protected $url = 'https://api2.wfirma.pl/';
-
-    /**
-     * @var int Type of authentication
-     */
-    protected $authentication;
 
     /**
      * @var string API username
@@ -70,7 +62,6 @@ class Client
      */
     protected function parseConfig(array $config = [])
     {
-        $this->authentication   = arrayGet($config['authentication'], self::AUTH_BASIC);
         $this->username         = arrayGet($config['username']);
         $this->password         = arrayGet($config['password']);
     }

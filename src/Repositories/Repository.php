@@ -2,6 +2,7 @@
 
 namespace Zalazdi\wFirma\Repositories;
 
+use Zalazdi\wFirma\AbstractClient;
 use Zalazdi\wFirma\Client;
 use Zalazdi\wFirma\Collection;
 use Zalazdi\wFirma\Models\Model;
@@ -15,7 +16,7 @@ abstract class Repository
     public $singularName;
     public $model;
 
-    public function __construct(Client $client)
+    public function __construct(AbstractClient $client)
     {
         $this->client = $client;
     }
