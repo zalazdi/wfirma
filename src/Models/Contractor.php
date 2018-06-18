@@ -2,7 +2,7 @@
 
 namespace Zalazdi\wFirma\Models;
 
-class Contactor extends Model
+class Contractor extends Model
 {
     protected $casts = [
         'id'                => 'int',

@@ -65,7 +65,7 @@ class Invoice extends Model
         'order'                 => Invoice::class,
 
         'series'                => Series::class,
-        'contractor'            => Contactor::class,
+        'contractor'            => Contractor::class,
         'invoicecontents'       => Collection::class,
     ];
     public $readOnly = ['id', 'created', 'updated'];
