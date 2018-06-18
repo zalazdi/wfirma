@@ -27,10 +27,41 @@ class OAuthClient extends AbstractClient
      */
     protected $guzzle;
 
-    const SCOPE_INVOICES_READ = 'invoices-read';
-    const SCOPE_INVOICES_WRITE = 'invoices-write';
-    const SCOPE_CONTRACTORS_READ = 'contractors-read';
-    const SCOPE_CONTRACTORS_WRITE = 'contractors-write';
+    const SCOPE_CONTRACTORS_READ            = 'contractors-read';
+    const SCOPE_CONTRACTORS_WRITE           = 'contractors-write';
+    const SCOPE_COMPANIES_READ              = 'companies-read';
+    const SCOPE_COMPANY_ACCOUNTS_READ       = 'company_accounts-read';
+    const SCOPE_COMPANY_PACKS_READ          = 'company_packs-read';
+    const SCOPE_DOCUMENTS_READ              = 'documents-read';
+    const SCOPE_DOCUMENTS_WRITE             = 'documents-write';
+    const SCOPE_EXPENSES_READ               = 'expenses-read';
+    const SCOPE_GOODS_READ                  = 'goods-read';
+    const SCOPE_GOOD_WRITE                  = 'goods-write';
+    const SCOPE_INVOICES_READ               = 'invoices-read';
+    const SCOPE_INVOICES_WRITE              = 'invoices-write';
+    const SCOPE_INVOICE_DESCRIPTIONS_READ   = 'invoice_descriptions-read';
+    const SCOPE_INVOICE_DELIVERIES_READ     = 'invoice_deliveries-read';
+    const SCOPE_INVOICE_DELIVERIES_WRITE    = 'invoice_deliveries-write';
+    const SCOPE_NOTES_READ                  = 'notes-read';
+    const SCOPE_NOTES_WRITE                 = 'notes-write';
+    const SCOPE_PAYMENTS_READ               = 'payments-read';
+    const SCOPE_PAYMENTS_WRITE              = 'payments-write';
+    const SCOPE_PAYMENT_CASHBOXES           = 'payment_cashboxes-read';
+    const SCOPE_SERIES_READ                 = 'series-read';
+    const SCOPE_SERIES_WRITE                = 'series-write';
+    const SCOPE_STAFF_CALENDAR_WORK_ABSENCES = 'staff_calendar_work_absences-read';
+    const SCOPE_STAFF_EMPLOYEES             = 'staff_employees-read';
+    const SCOPE_TAGS_READ                   = 'tags-read';
+    const SCOPE_TAGS_WRITE                  = 'tags-write';
+    const SCOPE_TERMS_READ                  = 'terms-read';
+    const SCOPE_TERMS_WRITE                 = 'terms-write';
+    const SCOPE_TERM_GROUPS_READ            = 'term_groups-read';
+    const SCOPE_TERM_GROUPS_WRITE           = 'term_groups-write';
+    const SCOPE_USER_COMPANIES_READ         = 'user_companies-read';
+    const SCOPE_USERS_READ                  = 'users-read';
+    const SCOPE_WAREHOUSES_READ             = 'warehouses-read';
+    const SCOPE_WEBHOOKS_READ               = 'webhooks-read';
+    const SCOPE_WEBHOOKS_WRITE              = 'webhooks-write';
 
     /**
      * Client constructor.

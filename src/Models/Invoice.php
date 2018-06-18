@@ -6,7 +6,7 @@ use Zalazdi\wFirma\Collection;
 
 class Invoice extends Model
 {
-    public $casts = [
+    protected $casts = [
         'id'                    => 'int',
         'payment_method'        => 'string',
         'payment_date'          => 'datetime',

@@ -6,7 +6,7 @@ use Zalazdi\wFirma\Collection;
 
 class Model
 {
-    public $casts = [];
+    protected $casts = [];
     public $readOnly = [];
 
     public $attributes = [];
@@ -23,7 +23,7 @@ class Model
      */
     public function fill(array $attributes = [])
     {
-        foreach($this->casts as $key => $type) {
+        foreach ($this->casts as $key => $type) {
             $value = arrayGet($attributes[$key]);
 
             $this->setAttribute(
@@ -79,8 +79,11 @@ class Model
             return $value;
         }
 
-        switch ($type)
-        {
+        if (is_subclass_of($type, Model::class)) {
+            return new $type($value);
+        }
+
+        switch ($type) {
             case 'int':
             case 'integer':
                 return (int) $value;

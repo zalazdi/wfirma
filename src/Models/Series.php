@@ -6,7 +6,7 @@ use Zalazdi\wFirma\Repositories\SeriesRepository;
 
 class Series extends Model
 {
-    public $casts = [
+    protected $casts = [
         'id'            => 'int',
         'name'          => 'string',
         'template'      => 'string',
