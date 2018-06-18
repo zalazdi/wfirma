@@ -4,7 +4,7 @@ namespace Zalazdi\wFirma\Models;
 
 class Contactor extends Model
 {
-    public $casts = [
+    protected $casts = [
         'id'                => 'int',
         'name'              => 'string',
         'altname'           => 'string',

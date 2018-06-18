@@ -4,11 +4,9 @@ namespace Zalazdi\wFirma\Models;
 
 class UserCompany extends Model
 {
-    public $casts = [
+    protected $casts = [
         'id'            => 'int',
         'right'         => 'string',
-        'user'          => 'array',
-        'warehouse'     => 'array',
-        'company'       => 'array',
+        'company'       => Company::class,
     ];
 }

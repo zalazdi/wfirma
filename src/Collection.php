@@ -4,7 +4,7 @@ namespace Zalazdi\wFirma;
 
 use Zalazdi\wFirma\Models\Model;
 
-class Collection implements \IteratorAggregate
+class Collection implements \IteratorAggregate, \ArrayAccess
 {
     public $items;
     public $parameters;
@@ -14,6 +14,13 @@ class Collection implements \IteratorAggregate
         foreach ($items as $item) {
             $this->addItem($item);
         }
+    }
+
+    public function toArray()
+    {
+        return array_map(function($item) {
+            return $item->toArray();
+        }, $this->items);
     }
 
     /**
@@ -37,6 +44,16 @@ class Collection implements \IteratorAggregate
     }
 
     /**
+     * Get first item
+     *
+     * @return object
+     */
+    public function first()
+    {
+        return reset($this->items);
+    }
+
+    /**
      * Get an iterator for the items
      *
      * @return \ArrayIterator
@@ -46,13 +63,23 @@ class Collection implements \IteratorAggregate
         return new \ArrayIterator($this->items);
     }
 
-    /**
-     * Get first item
-     *
-     * @return object
-     */
-    public function first()
+    public function offsetExists($offset)
     {
-        return reset($this->items);
+        return isset($this->items[$offset]);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->items[$offset];
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $this->items[$offset] = $value;
+    }
+
+    public function offsetUnset($offset)
+    {
+        unset($this->items[$offset]);
     }
 }
