@@ -3,6 +3,7 @@
 namespace Zalazdi\wFirma\Repositories;
 
 use Zalazdi\wFirma\Models\Contactor;
+
 class ContractorRepository extends Repository
 {
     public $name = 'contractors';

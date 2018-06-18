@@ -31,6 +31,8 @@ class OAuthClient extends AbstractClient
     const SCOPE_INVOICES_WRITE = 'invoices-write';
     const SCOPE_CONTRACTORS_READ = 'contractors-read';
     const SCOPE_CONTRACTORS_WRITE = 'contractors-write';
+    const SCOPE_COMPANIES_READ = 'companies-read';
+    const SCOPE_USER_COMPANIES_READ = 'user_companies-read';
 
     /**
      * Client constructor.
