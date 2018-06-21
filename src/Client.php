@@ -5,7 +5,7 @@ namespace Zalazdi\wFirma;
 use function GuzzleHttp\json_decode;
 use function GuzzleHttp\json_encode;
 
-class Client
+class Client extends AbstractClient
 {
     /**
      * @var string API Url
