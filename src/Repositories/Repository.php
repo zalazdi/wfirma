@@ -2,7 +2,6 @@
 
 namespace Zalazdi\wFirma\Repositories;
 
-use Zalazdi\wFirma\AbstractClient;
 use Zalazdi\wFirma\Client;
 use Zalazdi\wFirma\Collection;
 use Zalazdi\wFirma\Models\Model;
@@ -15,8 +14,9 @@ abstract class Repository
     public $name;
     public $singularName;
     public $model;
+    public $errors;
 
-    public function __construct(AbstractClient $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
@@ -68,15 +68,34 @@ abstract class Repository
         $result = $this->client->execute($query);
 
         if (arrayGet($result['status']['code']) == 'OK') {
-            return $model->fill(arrayGet($result[$this->name][0][$this->singularName]));
+            $model->fill(arrayGet($result[$this->name][0][$this->singularName]));
+            return true;
+        } else {
+            $this->saveErrors($result[$this->name][0][$this->singularName]['errors']);
+            return false;
+        }
+    }
+
+    public function edit(Model $model, $id)
+    {
+        $query = $this->newQuery('edit/'.$id);
+        $query->addParameters([
+            $this->name => [
+                $this->singularName => $model->toArray(),
+            ]
+        ]);
+
+        $result = $this->client->execute($query);
+
+        if (arrayGet($result['status']['code']) == 'OK') {
+            $model->fill(arrayGet($result[$this->name][0][$this->singularName]));
+            return true;
+        } else {
+            $this->saveErrors($result[$this->name][0][$this->singularName]['errors']);
+            return false;
         }
 
         return false;
-    }
-
-    public function edit()
-    {
-
     }
 
     public function delete()
@@ -105,6 +124,23 @@ abstract class Repository
         }
 
         return $collection;
+    }
+
+    /**
+     * Tranform errors collection into assocciate colletion where key is a field name (like Laravel Validation)
+     *
+     * @param array $errors
+     */
+    protected function saveErrors($errors)
+    {
+        $collection = [];
+
+        foreach ($errors as $error) {
+            $newError = $error['error'];
+            unset($newError['field']);
+            $collection[$error['error']['field']][] = $newError;
+        }
+        $this->errors = collect($collection);
     }
 
     /**
