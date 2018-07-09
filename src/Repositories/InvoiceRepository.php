@@ -10,9 +10,9 @@ class InvoiceRepository extends Repository
     public $singularName = 'invoice';
     public $model = Invoice::class;
 
-    public function download($id, $parameters = [])
+    public function download($id, $companyId = null, $parameters = [])
     {
-        $query = $this->newQuery('download/'.$id);
+        $query = $this->newQuery('download/'.$id, $companyId);
         $query->addParameters([
             $this->name => [
                 'parameters' => $parameters,

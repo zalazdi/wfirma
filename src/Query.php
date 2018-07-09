@@ -16,9 +16,18 @@ class Query
      * @param string $module Module name
      * @param string $function Function name
      */
-    public function __construct($module, $function)
+    public function __construct($module, $function, $companyId = null)
     {
-        $this->path = $module.'/'.$function.'?inputFormat=json&outputFormat=json';
+        $params = [
+            'inputFormat' => 'json',
+            'outputFormat' => 'json',
+        ];
+
+        if ($companyId) {
+            $params['company_id'] = $companyId;
+        }
+
+        $this->path = $module.'/'.$function.'?'.http_build_query($params);
     }
 
     /**

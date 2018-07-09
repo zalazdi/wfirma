@@ -18,6 +18,10 @@ class Collection implements \IteratorAggregate, \ArrayAccess
 
     public function toArray()
     {
+        if (! is_array($this->items)) {
+            return [];
+        }
+
         return array_map(function($item) {
             return $item->toArray();
         }, $this->items);

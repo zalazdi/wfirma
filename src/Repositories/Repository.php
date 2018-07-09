@@ -21,9 +21,9 @@ abstract class Repository
         $this->client = $client;
     }
 
-    public function get($id)
+    public function get($id, $companyId = null)
     {
-        $query = $this->newQuery('get/'.$id);
+        $query = $this->newQuery('get/'.$id, $companyId);
 
         $result = $this->client->execute($query);
 
@@ -34,11 +34,11 @@ abstract class Repository
         return false;
     }
 
-    public function find($limit = 10, $page = 1, $conditions = [])
+    public function find($limit = 10, $page = 1, $conditions = [], $companyId = null)
     {
         // @ToDo Add parameters
 
-        $query = $this->newQuery('find');
+        $query = $this->newQuery('find', $companyId);
         $query->addParameters([
             $this->name => [
                 'parameters' => [
@@ -56,9 +56,9 @@ abstract class Repository
         }
     }
 
-    public function add(Model $model)
+    public function add(Model $model, $companyId = null)
     {
-        $query = $this->newQuery('add');
+        $query = $this->newQuery('add', $companyId);
         $query->addParameters([
             $this->name => [
                 $this->singularName => $model->toArray(),
@@ -112,8 +112,8 @@ abstract class Repository
      *
      * @return Query
      */
-    protected function newQuery($function)
+    protected function newQuery($function, $companyId = null)
     {
-        return new Query($this->name, $function);
+        return new Query($this->name, $function, $companyId);
     }
 }
