@@ -51,7 +51,7 @@ class Invoice extends Model
         'netto'                 => 'float',
         'tax'                   => 'float',
         'signed'                => 'boolean',
-        'hash'                  => 'boolean',
+        'hash'                  => 'string',
         'id_external'           => 'string',
         'warehouse_type'        => 'boolean',
         'notes'                 => 'int',
