@@ -34,18 +34,31 @@ abstract class Repository
         return false;
     }
 
-    public function find($limit = 10, $page = 1, $conditions = [])
+    /**
+     * @param  int $limit
+     * @param  int $page
+     * @param  array $conditions
+     * @param  array $parameters Optional, additional parameters like order, fields etc..
+     * @return array
+     */
+    public function find($limit = 10, $page = 1, $conditions = [], $parameters = [])
     {
-        // @ToDo Add parameters
+        $queryParams = [
+            'limit'      => $limit,
+            'page'       => $page,
+            'conditions' => $conditions,
+        ];
+
+        if (!empty($parameters)) {
+            foreach ($parameters as $type => $values) {
+                $queryParams[$type] = $values;
+            }
+        }
 
         $query = $this->newQuery('find');
         $query->addParameters([
             $this->name => [
-                'parameters' => [
-                    'limit' => $limit,
-                    'page' => $page,
-                    'conditions' => $conditions,
-                ],
+                'parameters' => $queryParams
             ]
         ]);
 
