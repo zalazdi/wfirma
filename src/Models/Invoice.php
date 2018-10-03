@@ -9,7 +9,7 @@ class Invoice extends Model
     protected $casts = [
         'id'                    => 'int',
         'payment_method'        => 'string',
-        'payment_date'          => 'datetime',
+        'paymentdate'           => 'string',
         'payment_status'        => 'string',
         'disposaldate_format'   => 'string',
         'disposaldate_empty'    => 'string',
