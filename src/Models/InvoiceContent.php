@@ -19,5 +19,7 @@ class InvoiceContent extends Model
         'lumpcode'          => 'int',
         'created'           => 'date',
         'modified'          => 'date',
+        
+        'good'              => Good::class,
     ];
 }
